@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Results of {{ question.question_text }}</title>
+    {% load static %} {% comment %} La etiqueta de plantilla static genera la URL absoluta de los archivos estáticos.  {% endcomment %}
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/styles.css' %}">
+  </head>
+  <body>
+    <h1>{{ question.question_text }}</h1>
+
+    <ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+        {% comment %} * pluralize es una función del template que permite indicar si un string es plural o no dependiendo de un valor numérico {% endcomment %}
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+  </body>
+</html>
